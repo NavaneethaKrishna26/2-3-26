@@ -1,438 +1,323 @@
-/* ========================================
-   PROFESSIONAL TEAM EVAL - INDUSTRY CSS
-   Fully Responsive | Glassmorphism | Animations
-======================================== */
+/* ==========================================
+   PERFORMANCE EVALUATION SYSTEM - CLEAN UI
+   Professional | Aligned | Responsive
+========================================== */
 
-/* Reset & Variables */
+/* ========== RESET ========== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
+/* ========== VARIABLES ========== */
 :root {
-  --primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  --success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  --bg-primary: #0f0f23;
-  --bg-secondary: #16213e;
-  --glass: rgba(255, 255, 255, 0.1);
-  --glass-border: rgba(255, 255, 255, 0.2);
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.8);
-  --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  --radius: 20px;
+  --primary: linear-gradient(135deg, #667eea, #764ba2);
+  --success: linear-gradient(135deg, #10b981, #059669);
+  --bg-dark: #0f172a;
+  --bg-card: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --text-main: #ffffff;
+  --text-light: rgba(255, 255, 255, 0.7);
+  --radius: 16px;
+  --shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
 }
-html {
-  scroll-behavior: smooth;
-}
+
+/* ========== BODY ========== */
 body {
-  font-family:
-    "Inter",
-    -apple-system,
-    BlinkMacSystemFont,
-    sans-serif;
-  background: linear-gradient(
-    135deg,
-    var(--bg-primary) 0%,
-    var(--bg-secondary) 100%
-  );
-  color: var(--text-primary);
+  font-family: "Inter", sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: var(--text-main);
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-/* Navbar - Glassmorphism */
+/* ==========================================
+   NAVBAR
+========================================== */
 .navbar {
   position: fixed;
   top: 0;
   width: 100%;
   padding: 1rem 5%;
-  backdrop-filter: blur(20px);
-  background: var(--glass);
+  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.05);
   border-bottom: 1px solid var(--glass-border);
-  z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: all 0.3s ease;
+  z-index: 1000;
 }
+
 .logo {
-  font-size: clamp(1.2rem, 4vw, 1.8rem);
+  font-size: 1.6rem;
   font-weight: 800;
   background: var(--primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.nav-links {
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-}
-.nav-btn {
-  padding: 0.8rem 1.8rem;
-  border: 2px solid transparent;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  text-decoration: none;
-  position: relative;
-  overflow: hidden;
-}
-.nav-register {
-  background: var(--success);
-  color: white;
-}
-.nav-login {
-  background: transparent;
-  color: var(--text-primary);
-  border-color: var(--glass-border);
-}
-.nav-btn:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: var(--shadow);
-  border-color: var(--glass-border);
-}
-.nav-btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
-  transition: left 0.5s;
-}
-.nav-btn:hover::before {
-  left: 100%;
 }
 
-/* Hero Section */
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-btn {
+  padding: 0.6rem 1.4rem;
+  border-radius: 30px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
+  transition: 0.3s ease;
+}
+
+.nav-btn:hover {
+  background: var(--primary);
+  transform: translateY(-2px);
+}
+
+/* ==========================================
+   HERO SECTION
+========================================== */
 .hero {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  padding: 0 5%;
   margin-top: 80px;
+  text-align: center;
+  padding: 2rem;
 }
+
 .hero h1 {
-  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 900;
   background: var(--primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
   margin-bottom: 1.5rem;
-  animation: fadeInUp 1s ease;
-}
-.hero p {
-  font-size: clamp(1.1rem, 3vw, 1.5rem);
-  max-width: 700px;
-  margin-bottom: 3rem;
-  opacity: 0.9;
-  animation: fadeInUp 1s ease 0.2s both;
 }
 
-/* Forms - Glass Cards */
-.form-container {
-  backdrop-filter: blur(20px);
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  max-width: 450px;
-  margin: 2rem auto;
-  padding: 3rem;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  animation: slideInUp 0.8s ease;
+.hero p {
+  font-size: 1.2rem;
+  max-width: 650px;
+  color: var(--text-light);
 }
+
+/* ==========================================
+   FORM CONTAINER
+========================================== */
+.form-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow);
+}
+
 .form-container h2 {
   text-align: center;
   margin-bottom: 2rem;
-  font-size: 2rem;
-  font-weight: 700;
+  font-size: 1.8rem;
 }
+
 .form-group {
-  margin-bottom: 1.8rem;
-  position: relative;
+  margin-bottom: 1.5rem;
 }
+
 .form-group label {
   display: block;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-light);
   font-weight: 600;
-  color: var(--text-secondary);
 }
+
 .form-group input,
 .form-group select {
   width: 100%;
-  padding: 1.2rem 1.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid var(--glass-border);
-  border-radius: 15px;
-  color: var(--text-primary);
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
   font-size: 1rem;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
+  transition: 0.3s ease;
 }
-.form-group input::placeholder {
-  color: var(--text-secondary);
-}
+
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
-  border-color: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
-  transform: translateY(-2px);
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
 }
 
-/* Dashboard & Cards */
+/* ==========================================
+   DASHBOARD
+========================================== */
 .dashboard {
-  padding: clamp(2rem, 5vw, 4rem);
-  max-width: 1400px;
-  margin: 0 auto;
+  padding: 120px 5% 3rem;
+  max-width: 1300px;
+  margin: auto;
 }
+
 .teams-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
-  margin-top: 3rem;
 }
+
 .team-card {
-  backdrop-filter: blur(20px);
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
+  padding: 2rem;
   border-radius: var(--radius);
-  padding: 2.5rem;
+  background: var(--bg-card);
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--glass-border);
+  transition: 0.4s ease;
   cursor: pointer;
-  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  position: relative;
-  overflow: hidden;
 }
-.team-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: var(--success);
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-}
+
 .team-card:hover {
-  transform: translateY(-15px) scale(1.02);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-8px);
+  box-shadow: var(--shadow);
 }
-.team-card:hover::before {
-  transform: scaleX(1);
-}
+
 .team-card h3 {
-  font-size: 1.8rem;
-  font-weight: 800;
-  background: var(--primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: 1.4rem;
   margin-bottom: 1rem;
 }
 
-/* Table */
+/* ==========================================
+   TEAM DETAILS TABLE
+========================================== */
 .team-details {
+  padding: 120px 5% 3rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.table-wrapper {
+  background: var(--bg-card);
   backdrop-filter: blur(20px);
-  background: var(--glass);
   border: 1px solid var(--glass-border);
-  max-width: 1000px;
-  margin: 2rem auto;
-  padding: 3rem;
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  padding: 2rem;
+  overflow-x: auto;
 }
-.table {
+
+table {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 1rem;
-  margin-bottom: 2rem;
+  border-collapse: collapse;
+  text-align: center;
 }
-.table th {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 1.5rem;
-  text-align: left;
+
+th {
+  padding: 1rem;
   font-weight: 700;
-  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-light);
 }
-.table td {
-  padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.05);
+
+td {
+  padding: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
-.marks-input {
-  width: 100px;
-  padding: 0.8rem;
+
+.sub-text {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+/* Dropdown */
+.mark-select {
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--glass-border);
   background: rgba(255, 255, 255, 0.1);
-  border: 2px solid var(--glass-border);
-  border-radius: 10px;
-  color: var(--text-primary);
-}
-.save-row-btn {
-  padding: 0.8rem 1.5rem;
-  background: var(--success);
-  border: none;
-  border-radius: 10px;
   color: white;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
 }
-.save-row-btn:hover {
+
+.mark-select option {
+  background: #1e293b;
+  color: white;
+}
+
+/* Total Column */
+.total {
+  font-weight: 700;
+  color: #10b981;
+}
+
+/* Save Button */
+.save-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  background: var(--success);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.save-btn:hover {
   transform: scale(1.05);
+}
+
+.save-btn:disabled {
+  background: gray;
+  cursor: not-allowed;
 }
 
 /* Submit Button */
 .submit-btn {
   width: 100%;
-  padding: 1.5rem;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 12px;
+  border: none;
   background: var(--primary);
   color: white;
-  border: none;
-  border-radius: var(--radius);
-  font-size: 1.2rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.4s ease;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  transition: 0.3s ease;
 }
+
 .submit-btn:hover {
-  transform: translateY(-5px);
+  transform: translateY(-3px);
   box-shadow: var(--shadow);
 }
 
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Loading */
+.loading {
+  padding: 150px 0;
+  text-align: center;
+  font-size: 1.5rem;
 }
 
-/* RESPONSIVE - Mobile First */
-@media (max-width: 1024px) {
-  .teams-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-  }
-}
-
+/* ==========================================
+   RESPONSIVE
+========================================== */
 @media (max-width: 768px) {
   .navbar {
-    padding: 1rem 2%;
+    padding: 1rem 3%;
   }
-  .nav-links {
-    position: fixed;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--glass);
-    flex-direction: column;
-    padding: 2rem;
-    border-top: 1px solid var(--glass-border);
-    transform: translateY(-100%);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.4s ease;
-  }
-  .nav-links.active {
-    transform: translateY(0);
-    opacity: 1;
-    visibility: visible;
-  }
-  .hero {
-    padding: 0 5%;
-    text-align: center;
-  }
-  .form-container {
-    margin: 1rem 5%;
-    padding: 2rem 1.5rem;
-  }
-  .team-details {
-    margin: 1rem 5%;
-    padding: 2rem 1.5rem;
-  }
-  .table {
-    font-size: 0.9rem;
-  }
-  .table th,
-  .table td {
-    padding: 1rem 0.5rem;
-  }
-}
 
-@media (max-width: 480px) {
-  .hero h1 {
-    font-size: 2.5rem;
-  }
   .teams-grid {
     grid-template-columns: 1fr;
   }
-  .team-card {
-    padding: 2rem 1.5rem;
-  }
-}
-/* DROPDOWN FIX - Add this to end of app.css */
-.form-group select {
-  color: #ffffff !important;
-  background: rgba(255, 255, 255, 0.15) !important;
-}
-.form-group select option {
-  background: #1a1a2e !important;
-  color: #ffffff !important;
-  padding: 10px !important;
-}
-.form-group select option:checked {
-  background: var(--primary) !important;
-  color: white !important;
-}
 
-/* Input text fix */
-.form-group input {
-  color: #ffffff !important;
-  background: rgba(255, 255, 255, 0.15) !important;
-}
-.form-group input::placeholder {
-  color: rgba(255, 255, 255, 0.6) !important;
-}
-/* REGISTER PAGE TABLE FIXES */
-.register-page input,
-.register-page select {
-  color: white !important;
-  background: rgba(255, 255, 255, 0.15) !important;
-}
-.register-page input::placeholder {
-  color: rgba(255, 255, 255, 0.6) !important;
-}
-.register-page option {
-  background: #1a1a2e !important;
-  color: white !important;
+  .form-container {
+    margin: 2rem 1rem;
+  }
+
+  .team-details {
+    padding: 120px 1rem 2rem;
+  }
 }

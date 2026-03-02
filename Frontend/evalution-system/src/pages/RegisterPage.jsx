@@ -29,20 +29,38 @@ export default function RegisterPage() {
     );
   };
 
+  // In handleSubmit() - Replace the mock:
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (students.some((s) => !s.name || !s.role)) {
-      alert("Please fill all student names and roles!");
+    if (students.some((s) => !s.name)) {
+      alert("Fill all names!");
       return;
     }
 
     setLoading(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      alert(`✅ "${teamName}" team registered successfully!`);
-      navigate("/");
+      const res = await fetch("http://localhost:8080/api/teams/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          teamName,
+          members: students.map((s) => ({
+            name: s.name,
+            rollNumber: `22CS${Math.floor(Math.random() * 900) + 100}`, // Auto-generate
+            role: s.role,
+          })),
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        alert(`✅ Team ID: ${data.teamId} registered!`);
+        navigate("/");
+      } else {
+        alert("Registration failed");
+      }
     } catch {
-      alert("Error registering team");
+      alert("Server error - check backend");
     }
     setLoading(false);
   };
