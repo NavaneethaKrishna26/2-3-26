@@ -59,13 +59,6 @@ export default function EvaluateTeamPage() {
 
   return (
     <div className="team-container">
-      <div className="top-bar">
-        <Link to="/admin-dashboard" className="back-link">
-          ← Back to Dashboard
-        </Link>
-        <h1>{team.teamName}</h1>
-      </div>
-
       <div className="table-wrapper">
         <table>
           <thead>

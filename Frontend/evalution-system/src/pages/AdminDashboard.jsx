@@ -64,12 +64,7 @@ export default function AdminDashboard() {
           alignItems: "center",
           marginBottom: "2rem",
         }}
-      >
-        <h1 style={{ margin: 0 }}>🏆 Teams Dashboard ({teams.length})</h1>
-        <Link to="/" style={{ color: "#667eea", textDecoration: "none" }}>
-          ← Back Home
-        </Link>
-      </div>
+      ></div>
 
       <div className="teams-grid">
         {teams.map((team) => (
