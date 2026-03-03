@@ -1,20 +1,31 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { adminLogin } from "../services/api";
 
 export default function AdminLoginPage() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // ✅ CHANGED: 123 123 credentials
-    if (username === "123" && password === "123") {
-      localStorage.setItem("token", "admin-token");
-      navigate("/admin-dashboard");
-    } else {
-      alert("❌ Invalid credentials! Use: 123 / 123");
+    
+    if (!email || !password) {
+      alert("❌ Please fill in both fields");
+      return;
     }
+
+    setLoading(true);
+    try {
+      const response = await adminLogin({ email, password });
+      alert(`✅ Login successful!`);
+      navigate("/admin-dashboard");
+    } catch (error) {
+      console.error("Login error:", error);
+      alert(`❌ Login failed: ${error.message || "Invalid credentials"}`);
+    }
+    setLoading(false);
   };
 
   return (
@@ -28,31 +39,33 @@ export default function AdminLoginPage() {
           fontSize: "0.95rem",
         }}
       >
-        Username: <strong>123</strong> | Password: <strong>123</strong>
+        Use your registered email and password to login
       </p>
       <form onSubmit={handleLogin}>
         <div className="form-group">
-          <label>Username</label>
+          <label>Email</label>
           <input
-            type="text"
-            placeholder="Enter username (123)"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
+            disabled={loading}
           />
         </div>
         <div className="form-group">
           <label>Password</label>
           <input
             type="password"
-            placeholder="Enter password (123)"
+            placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            disabled={loading}
           />
         </div>
-        <button type="submit" className="submit-btn">
-          🚀 Login to Dashboard
+        <button type="submit" className="submit-btn" disabled={loading}>
+          {loading ? "⏳ Logging in..." : "🚀 Login to Dashboard"}
         </button>
       </form>
     </div>

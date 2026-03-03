@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { registerTeam } from "../services/api";
 
 export default function RegisterPage() {
   const [teamName, setTeamName] = useState("");
@@ -16,6 +17,7 @@ export default function RegisterPage() {
     const newStudents = Array.from({ length: teamSize }, (_, i) => ({
       id: Date.now() + i,
       name: "",
+      rollNumber: "",
       role: "Frontend",
       isTeamLead: false,
     }));
@@ -29,38 +31,40 @@ export default function RegisterPage() {
     );
   };
 
-  // In handleSubmit() - Replace the mock:
+  // Handle team registration using API
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (students.some((s) => !s.name)) {
-      alert("Fill all names!");
+    
+    // Validate all names are filled
+    if (students.some((s) => !s.name || !s.rollNumber)) {
+      alert("❌ Fill all names and roll numbers!");
+      return;
+    }
+
+    // Validate unique roll numbers
+    const rollNumbers = students.map(s => s.rollNumber);
+    if (new Set(rollNumbers).size !== rollNumbers.length) {
+      alert("❌ Roll numbers must be unique!");
       return;
     }
 
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8080/api/teams/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          teamName,
-          members: students.map((s) => ({
-            name: s.name,
-            rollNumber: `22CS${Math.floor(Math.random() * 900) + 100}`, // Auto-generate
-            role: s.role,
-          })),
-        }),
-      });
+      const teamData = {
+        teamName,
+        members: students.map((s) => ({
+          name: s.name,
+          rollNumber: s.rollNumber,
+          role: s.role,
+        })),
+      };
 
-      if (res.ok) {
-        const data = await res.json();
-        alert(`✅ Team ID: ${data.teamId} registered!`);
-        navigate("/");
-      } else {
-        alert("Registration failed");
-      }
-    } catch {
-      alert("Server error - check backend");
+      const response = await registerTeam(teamData);
+      alert(`✅ Team ID: ${response.teamId} registered successfully!`);
+      navigate("/");
+    } catch (error) {
+      console.error("Registration error:", error);
+      alert(`❌ Registration failed: ${error.message || "Server error"}`);
     }
     setLoading(false);
   };
@@ -149,10 +153,10 @@ export default function RegisterPage() {
                         Name
                       </th>
                       <th style={{ padding: "1rem", textAlign: "left" }}>
-                        Role
+                        Roll Number
                       </th>
                       <th style={{ padding: "1rem", textAlign: "left" }}>
-                        Team Lead
+                        Role
                       </th>
                     </tr>
                   </thead>
@@ -169,6 +173,24 @@ export default function RegisterPage() {
                             value={student.name}
                             onChange={(e) =>
                               updateStudent(student.id, "name", e.target.value)
+                            }
+                            style={{
+                              width: "100%",
+                              padding: "0.8rem",
+                              background: "rgba(255,255,255,0.1)",
+                              border: "2px solid rgba(255,255,255,0.2)",
+                              borderRadius: "10px",
+                              color: "white",
+                            }}
+                          />
+                        </td>
+                        <td style={{ padding: "1rem" }}>
+                          <input
+                            type="text"
+                            placeholder="Roll Number"
+                            value={student.rollNumber}
+                            onChange={(e) =>
+                              updateStudent(student.id, "rollNumber", e.target.value)
                             }
                             style={{
                               width: "100%",
@@ -202,23 +224,6 @@ export default function RegisterPage() {
                             ))}
                           </select>
                         </td>
-                        <td style={{ padding: "1rem" }}>
-                          <input
-                            type="checkbox"
-                            checked={student.isTeamLead}
-                            onChange={(e) =>
-                              updateStudent(
-                                student.id,
-                                "isTeamLead",
-                                e.target.checked,
-                              )
-                            }
-                            style={{
-                              transform: "scale(1.3)",
-                              accentColor: "#667eea",
-                            }}
-                          />
-                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -228,7 +233,7 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 className="submit-btn"
-                disabled={loading || students.some((s) => !s.name)}
+                disabled={loading || students.some((s) => !s.name || !s.rollNumber)}
                 style={{ marginTop: "1.5rem" }}
               >
                 {loading ? "⏳ Registering Team..." : "✅ Submit Team"}

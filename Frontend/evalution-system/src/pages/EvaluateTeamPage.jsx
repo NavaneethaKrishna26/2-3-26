@@ -1,28 +1,32 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { getAdminTeamDetails, submitStudentMarks } from "../services/api";
 
 export default function EvaluateTeamPage() {
   const { teamId } = useParams();
+  const navigate = useNavigate();
   const [team, setTeam] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [submittingMarks, setSubmittingMarks] = useState({});
   const [marks, setMarks] = useState({});
 
-  const mockTeam = {
-    teamId: 1,
-    teamName: "Alpha Developers",
-    members: [
-      { id: 1, name: "Ravi Kumar", rollNumber: "22CS101", role: "Backend" },
-      { id: 2, name: "Priya Sharma", rollNumber: "22CS102", role: "Frontend" },
-      { id: 3, name: "Arun Singh", rollNumber: "22CS103", role: "Designer" },
-    ],
-  };
-
   useEffect(() => {
-    setTimeout(() => {
-      setTeam(mockTeam);
-      setLoading(false);
-    }, 500);
+    fetchTeamDetails();
   }, [teamId]);
+
+  const fetchTeamDetails = async () => {
+    setLoading(true);
+    try {
+      const data = await getAdminTeamDetails(teamId);
+      setTeam(data);
+    } catch (error) {
+      console.error("Error fetching team details:", error);
+      alert(`❌ Failed to load team: ${error.message || "Server error"}`);
+      navigate("/admin-dashboard");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const updateMark = (studentId, criteria, value) => {
     setMarks((prev) => ({
@@ -41,7 +45,7 @@ export default function EvaluateTeamPage() {
     );
   };
 
-  const saveStudentMarks = (studentId) => {
+  const saveStudentMarks = async (studentId) => {
     const studentMarks = marks[studentId];
 
     if (
@@ -52,13 +56,49 @@ export default function EvaluateTeamPage() {
       return;
     }
 
-    alert("✅ Marks Saved Successfully!");
+    setSubmittingMarks((prev) => ({ ...prev, [studentId]: true }));
+    try {
+      await submitStudentMarks(studentId, studentMarks);
+      alert("✅ Marks Saved Successfully!");
+      // Clear marks for this student
+      setMarks((prev) => {
+        const updated = { ...prev };
+        delete updated[studentId];
+        return updated;
+      });
+      // Refresh team details
+      await fetchTeamDetails();
+    } catch (error) {
+      console.error("Error saving marks:", error);
+      alert(`❌ Failed to save marks: ${error.message || "Server error"}`);
+    } finally {
+      setSubmittingMarks((prev) => ({ ...prev, [studentId]: false }));
+    }
   };
 
-  if (loading) return <div className="loading">Loading Team...</div>;
+  if (loading) return (
+    <div className="loading" style={{ padding: "4rem", textAlign: "center" }}>
+      <div style={{ fontSize: "2rem", color: "#667eea" }}>⏳ Loading Team...</div>
+    </div>
+  );
+
+  if (!team) return (
+    <div className="error" style={{ padding: "4rem", textAlign: "center", color: "red" }}>
+      Team not found
+    </div>
+  );
 
   return (
     <div className="team-container">
+      <div style={{ marginBottom: "2rem" }}>
+        <Link to="/admin-dashboard" style={{ color: "#667eea", textDecoration: "none" }}>
+          ← Back to Dashboard
+        </Link>
+        <h2 style={{ marginTop: "0.5rem", marginBottom: "0.5rem" }}>
+          📝 Evaluate Team: {team.teamName}
+        </h2>
+      </div>
+
       <div className="table-wrapper">
         <table>
           <thead>
@@ -75,7 +115,7 @@ export default function EvaluateTeamPage() {
           </thead>
 
           <tbody>
-            {team.members.map((member) => {
+            {team.members && team.members.map((member) => {
               const studentMarks = marks[member.id] || {};
               const total = calculateTotal(studentMarks);
 
@@ -124,10 +164,10 @@ export default function EvaluateTeamPage() {
                   <td>
                     <button
                       className="save-btn"
-                      disabled={isDisabled}
+                      disabled={isDisabled || submittingMarks[member.id]}
                       onClick={() => saveStudentMarks(member.id)}
                     >
-                      Save
+                      {submittingMarks[member.id] ? "⏳" : "Save"}
                     </button>
                   </td>
                 </tr>
