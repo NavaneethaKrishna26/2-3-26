@@ -33,6 +33,19 @@ export const getTeamDetails = async (teamId) => {
 };
 
 /**
+ * Delete a team by ID
+ * DELETE /api/teams/{teamId}
+ */
+export const deleteTeam = async (teamId) => {
+  try {
+    const response = await axios.delete(`${API_BASE_URL}/teams/${teamId}`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};
+
+/**
  * Get team score
  * GET /api/teams/{teamId}/score
  */

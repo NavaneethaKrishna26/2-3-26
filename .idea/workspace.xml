@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4b36b3bd-8776-47cf-84dd-6364324e9968" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Backend/evaluation-system/evaluation-system/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/evaluation-system/evaluation-system/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/evalution-system/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/evalution-system/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/evalution-system/src/pages/AdminDashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/evalution-system/src/pages/AdminDashboard.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,6 +17,7 @@
   <component name="CopilotPersistence">
     <persistenceIdMap>
       <entry key="_D:/Practice Hackathon/2-3-26" value="3AQ3nuP6cFm1J1CdaOO9FcaAAol" />
+      <entry key="_D:/Practice Hackathon/2-3-26/Backend/evaluation-system/evaluation-system" value="3AQqqmClxRDGassJkagtdJWyvGu" />
     </persistenceIdMap>
   </component>
   <component name="Git.Settings">
@@ -38,6 +41,10 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
@@ -58,21 +65,12 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.fileTypes",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
     <configuration name="EvaluationSystemApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="demo" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.evaluation.EvaluationSystemApplication" />
@@ -98,6 +96,9 @@
       <updated>1772511136605</updated>
       <workItem from="1772511137848" duration="1387000" />
       <workItem from="1772513207538" duration="441000" />
+      <workItem from="1772521767953" duration="5000" />
+      <workItem from="1772521793183" duration="954000" />
+      <workItem from="1772535326357" duration="1133000" />
     </task>
     <task id="LOCAL-00001">
       <option name="closed" value="true" />

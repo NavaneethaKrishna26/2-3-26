@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getAllTeams } from "../services/api";
+import { getAllTeams, deleteTeam } from "../services/api";
 
 export default function AdminDashboard() {
   const [teams, setTeams] = useState([]);
@@ -40,6 +40,19 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleDeleteTeam = async (teamId, teamName) => {
+    if (window.confirm(`Are you sure you want to delete "${teamName}"?`)) {
+      try {
+        await deleteTeam(teamId);
+        alert(`✅ Team "${teamName}" deleted successfully!`);
+        fetchTeams(); // Refresh the teams list
+      } catch (error) {
+        console.error("Error deleting team:", error);
+        alert(`❌ Failed to delete team: ${error.message || "Server error"}`);
+      }
+    }
+  };
+
   if (loading) {
     return (
       <div
@@ -64,19 +77,7 @@ export default function AdminDashboard() {
         }}
       >
         <h1 style={{ color: "#667eea" }}>📊 Admin Dashboard</h1>
-        <button
-          onClick={() => navigate("/")}
-          style={{
-            padding: "0.8rem 1.5rem",
-            background: "rgba(255, 0, 0, 0.2)",
-            border: "2px solid rgba(255, 0, 0, 0.5)",
-            color: "white",
-            borderRadius: "10px",
-            cursor: "pointer",
-          }}
-        >
-          🚪 Logout
-        </button>
+        
       </div>
 
       {teams.length === 0 ? (
@@ -129,6 +130,27 @@ export default function AdminDashboard() {
                   {team.evaluationStatus}
                 </span>
               </p>
+              <button 
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleDeleteTeam(team.teamId, team.teamName);
+                }}
+                style={{
+                  marginTop: "1rem",
+                  padding: "0.5rem 1rem",
+                  background: "#ef4444",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  fontSize: "0.9rem",
+                  transition: "background 0.3s ease",
+                }}
+                onMouseEnter={(e) => (e.target.style.background = "#dc2626")}
+                onMouseLeave={(e) => (e.target.style.background = "#ef4444")}
+              >
+                🗑️ Delete Team
+              </button>
             </Link>
           ))}
         </div>
