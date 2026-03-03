@@ -1,6 +1,6 @@
 package com.evaluation.repository;
 
-import com.evaluation.model.Admin;
+import com.evaluation.entity.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 

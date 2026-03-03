@@ -2,7 +2,7 @@ package com.evaluation.service;
 
 import com.evaluation.dto.AdminLoginRequest;
 import com.evaluation.dto.AdminSignupRequest;
-import com.evaluation.model.Admin;
+import com.evaluation.entity.Admin;
 import com.evaluation.repository.AdminRepository;
 import com.evaluation.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;

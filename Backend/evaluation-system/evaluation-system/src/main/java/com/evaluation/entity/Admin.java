@@ -22,7 +22,7 @@ public class Admin {
     private String email;
 
     @Column(nullable = false)
-    private String password; // stored as bcrypt hash
+    private String password;
 
     private String role = "ADMIN";
 }

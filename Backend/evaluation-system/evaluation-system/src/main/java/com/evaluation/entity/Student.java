@@ -21,22 +21,19 @@ public class Student {
     @Column(unique = true, nullable = false)
     private String rollNumber;
 
-    private String role; // e.g. "Backend", "Frontend"
+    private String role;
 
-    // Marks (null means not yet evaluated)
     private Integer communication;
     private Integer technical;
     private Integer innovation;
     private Integer collaboration;
     private Integer presentation;
 
-    // Sum of all marks
+
     private Integer totalScore = 0;
 
-    // Whether this student has been evaluated
-    private Boolean evaluated = false;
 
-    // Many students belong to one team
+    private Boolean evaluated = false;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
