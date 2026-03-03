@@ -18,6 +18,7 @@ export default function EvaluateTeamPage() {
     setLoading(true);
     try {
       const data = await getAdminTeamDetails(teamId);
+      console.log("Team Data:", data); // Debug
       setTeam(data);
     } catch (error) {
       console.error("Error fetching team details:", error);
@@ -41,11 +42,16 @@ export default function EvaluateTeamPage() {
   const calculateTotal = (studentMarks) => {
     return Object.values(studentMarks || {}).reduce(
       (sum, v) => sum + (v || 0),
-      0,
+      0
     );
   };
 
   const saveStudentMarks = async (studentId) => {
+    if (!studentId) {
+      alert("Invalid Student ID");
+      return;
+    }
+
     const studentMarks = marks[studentId];
 
     if (
@@ -57,16 +63,18 @@ export default function EvaluateTeamPage() {
     }
 
     setSubmittingMarks((prev) => ({ ...prev, [studentId]: true }));
+
     try {
       await submitStudentMarks(studentId, studentMarks);
       alert("✅ Marks Saved Successfully!");
+
       // Clear marks for this student
       setMarks((prev) => {
         const updated = { ...prev };
         delete updated[studentId];
         return updated;
       });
-      // Refresh team details
+
       await fetchTeamDetails();
     } catch (error) {
       console.error("Error saving marks:", error);
@@ -76,24 +84,32 @@ export default function EvaluateTeamPage() {
     }
   };
 
-  if (loading) return (
-    <div className="loading" style={{ padding: "4rem", textAlign: "center" }}>
-      <div style={{ fontSize: "2rem", color: "#667eea" }}>⏳ Loading Team...</div>
-    </div>
-  );
+  if (loading)
+    return (
+      <div style={{ padding: "4rem", textAlign: "center" }}>
+        <div style={{ fontSize: "2rem", color: "#667eea" }}>
+          ⏳ Loading Team...
+        </div>
+      </div>
+    );
 
-  if (!team) return (
-    <div className="error" style={{ padding: "4rem", textAlign: "center", color: "red" }}>
-      Team not found
-    </div>
-  );
+  if (!team)
+    return (
+      <div style={{ padding: "4rem", textAlign: "center", color: "red" }}>
+        Team not found
+      </div>
+    );
 
   return (
     <div className="team-container">
       <div style={{ marginBottom: "2rem" }}>
-        <Link to="/admin-dashboard" style={{ color: "#667eea", textDecoration: "none" }}>
+        <Link
+          to="/admin-dashboard"
+          style={{ color: "#667eea", textDecoration: "none" }}
+        >
           ← Back to Dashboard
         </Link>
+
         <h2 style={{ marginTop: "0.5rem", marginBottom: "0.5rem" }}>
           📝 Evaluate Team: {team.teamName}
         </h2>
@@ -115,64 +131,76 @@ export default function EvaluateTeamPage() {
           </thead>
 
           <tbody>
-            {team.members && team.members.map((member) => {
-              const studentMarks = marks[member.id] || {};
-              const total = calculateTotal(studentMarks);
+            {team.members &&
+              team.members.map((member) => {
+                const studentMarks = marks[member.studentId] || {};
+                const total = calculateTotal(studentMarks);
 
-              const isDisabled =
-                Object.keys(studentMarks).length < 5 ||
-                Object.values(studentMarks).some(
-                  (v) => v === undefined || v === "",
-                );
+                const isDisabled =
+                  Object.keys(studentMarks).length < 5 ||
+                  Object.values(studentMarks).some(
+                    (v) => v === undefined || v === ""
+                  );
 
-              return (
-                <tr key={member.id}>
-                  <td>
-                    <strong>{member.name}</strong>
-                    <div className="sub-text">
-                      {member.rollNumber} • {member.role}
-                    </div>
-                  </td>
-
-                  {[
-                    "communication",
-                    "technical",
-                    "innovation",
-                    "collaboration",
-                    "presentation",
-                  ].map((criteria) => (
-                    <td key={criteria}>
-                      <select
-                        value={studentMarks[criteria] ?? ""}
-                        onChange={(e) =>
-                          updateMark(member.id, criteria, e.target.value)
-                        }
-                        className="mark-select"
-                      >
-                        <option value="">-</option>
-                        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
-                          <option key={num} value={num}>
-                            {num}
-                          </option>
-                        ))}
-                      </select>
+                return (
+                  <tr key={member.studentId}>
+                    <td>
+                      <strong>{member.name}</strong>
+                      <div className="sub-text">
+                        {member.rollNumber} • {member.role}
+                      </div>
                     </td>
-                  ))}
 
-                  <td className="total">{total} / 50</td>
+                    {[
+                      "communication",
+                      "technical",
+                      "innovation",
+                      "collaboration",
+                      "presentation",
+                    ].map((criteria) => (
+                      <td key={criteria}>
+                        <select
+                          value={studentMarks[criteria] ?? ""}
+                          onChange={(e) =>
+                            updateMark(
+                              member.studentId,
+                              criteria,
+                              e.target.value
+                            )
+                          }
+                          className="mark-select"
+                        >
+                          <option value="">-</option>
+                          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                            <option key={num} value={num}>
+                              {num}
+                            </option>
+                          ))}
+                        </select>
+                      </td>
+                    ))}
 
-                  <td>
-                    <button
-                      className="save-btn"
-                      disabled={isDisabled || submittingMarks[member.id]}
-                      onClick={() => saveStudentMarks(member.id)}
-                    >
-                      {submittingMarks[member.id] ? "⏳" : "Save"}
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+                    <td className="total">{total} / 50</td>
+
+                    <td>
+                      <button
+                        className="save-btn"
+                        disabled={
+                          isDisabled ||
+                          submittingMarks[member.studentId]
+                        }
+                        onClick={() =>
+                          saveStudentMarks(member.studentId)
+                        }
+                      >
+                        {submittingMarks[member.studentId]
+                          ? "⏳"
+                          : "Save"}
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       </div>
