@@ -168,4 +168,9 @@ public class TeamService {
                 student.getEvaluated()
         );
     }
+
+    public void deleteTeam(Long teamId)
+    {
+        teamRepository.deleteById(teamId);
+    }
 }

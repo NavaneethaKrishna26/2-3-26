@@ -38,6 +38,18 @@ public class TeamController {
         }
     }
 
+    //Delete
+    @DeleteMapping("/teams/{teamId}")
+    public ResponseEntity<?> deleteTeam(@PathVariable Long teamId){
+        try{
+            teamService.deleteTeam(teamId);
+            return ResponseEntity.ok("Delete Success");
+        }catch(RuntimeException e){
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+
     // GET /api/teams/{teamId}/score  (Public)
     @GetMapping("/teams/{teamId}/score")
     public ResponseEntity<?> getTeamScore(@PathVariable Long teamId) {
