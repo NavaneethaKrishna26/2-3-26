@@ -22,11 +22,9 @@ public class Team {
 
     private Double overallScore = 0.0;
 
-
     private String evaluationStatus = "PENDING";
 
     private Boolean locked = false;
-
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Student> members;

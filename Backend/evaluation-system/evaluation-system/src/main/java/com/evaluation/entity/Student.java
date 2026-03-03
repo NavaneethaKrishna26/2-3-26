@@ -1,5 +1,6 @@
 package com.evaluation.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,11 +30,13 @@ public class Student {
     private Integer collaboration;
     private Integer presentation;
 
-
+    @Column(nullable = false)
     private Integer totalScore = 0;
 
-
+    @Column(nullable = false)
     private Boolean evaluated = false;
+
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
